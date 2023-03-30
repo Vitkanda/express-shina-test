@@ -1,9 +1,17 @@
 import React from "react";
+import { useMainContext } from "../../context/MainContext";
 import styles from "./card.module.scss";
 
-const Card = ({ card, handleClick, select, index }) => {
+const Card = ({ card, index }) => {
+  const { setCoordinates, setSelect, select } = useMainContext();
+
   const selectClassName = (select, index) =>
     select !== index ? styles.sidebar__items : styles.sidebar__items__selected;
+
+  const handleClick = (cards, index) => {
+    setCoordinates([cards.latitude, cards.longitude]);
+    setSelect(index);
+  };
 
   return (
     <div

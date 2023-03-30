@@ -7,8 +7,11 @@ import {
   FullscreenControl,
   ZoomControl,
 } from "react-yandex-maps";
+import { useMainContext } from "../../context/MainContext";
 
-const YaMap = ({ coordinates }) => {
+const YaMap = () => {
+  const { coordinates } = useMainContext();
+
   return (
     <YMaps>
       <Map
@@ -18,7 +21,6 @@ const YaMap = ({ coordinates }) => {
           zoom: 15,
         }}
       >
-    
         <Placemark
           geometry={coordinates}
           options={{

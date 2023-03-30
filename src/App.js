@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import MainPage from "./components/MainPage/MainPage";
 import styles from "./app.module.scss";
 import YaMap from "./components/Map/YaMap";
+import { useMainContext } from "./context/MainContext";
 
 const App = () => {
-  const [cards, setCards] = useState([]);
-  const [coordinates, setCoordinates] = useState();
-  const [select, setSelect] = useState("");
+  const { cards, getFetch } = useMainContext();
 
   useEffect(() => {
-    fetch("https://express-shina.ru/vacancy/geo-state")
-      .then((response) => response.json())
-      .then((data) => setCards(data.pickPoints))
-      .catch((error) => console.error(error));
+    getFetch();
   }, []);
 
-  const handleClick = (cards, index) => {
-    setCoordinates([cards.latitude, cards.longitude]);
-    setSelect(index);
-  };
   return (
     <div className={styles.app}>
-      <MainPage cards={cards} handleClick={handleClick} select={select} />
-      <YaMap coordinates={coordinates} />
+      {cards ? <MainPage /> : null}
+      <YaMap />
     </div>
   );
 };
